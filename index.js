@@ -15,13 +15,15 @@ app.use(express.static(path.join(__dirname, '/public')));
 // first, look in public, if not there, start looking down here:
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
-app.set('/views', './src/views');
+app.set('views', './src/views');
 app.set('view engine', 'pug');
 // request to this route exe this function:
 app.get('/', (req, resp) => {
 //resp.send('<p><strong>hell world</strong></p>');
 //change to sendFile:
-    resp.sendFile(path.join(__dirname, '/views/index.html'));
+ //   resp.sendFile(path.join(__dirname, '/views/index.html'));
+// above is to send html, here, is render a pug file:
+    resp.render('index');
 });
 
 app.listen(3000, function(){
