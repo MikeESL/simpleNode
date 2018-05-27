@@ -1,36 +1,38 @@
 // list of requires
-var express = require('express'),
-    chalk = require('chalk'),
-    debug = require ('debug')('myApp'),
-    morgan = require('morgan');
-
-
-//app:
-var app = express();
+const express = require('express');
+const   chalk = require('chalk');
+const   debug = require ('debug')('myApp');
+const   morgan = require('morgan');
+    // path to make sendFile paths easy, no npm needed; already here
+const   path = require('path');
+const app = express();
+const port = process.env.PORT || 3000;
  
-
-
-
 // for  middleware: //look into other options besides combined, like tiny, etc
 app.use(morgan('tiny'));
-
+// tells express, 'hey, i'm setting up a static dir (like for css/js libs)
+app.use(express.static(path.join(__dirname, '/public')));
+// first, look in public, if not there, start looking down here:
+app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
+app.set('/views', './src/views');
+app.set('view engine', 'pug');
 // request to this route exe this function:
-app.get('/', function(req, resp){
-    resp.send('<p><strong>hell world</strong></p>');
-})
+app.get('/', (req, resp) => {
+//resp.send('<p><strong>hell world</strong></p>');
+//change to sendFile:
+    resp.sendFile(path.join(__dirname, '/views/index.html'));
+});
 
 app.listen(3000, function(){
-    // like this:
-    //console.log("listening on port " + chalk.green('3000'));
-    // change to template string:
-   // console.log(`listening on port ${chalk.green('3000')}`);
-   // but no more console logs: npm install debug instead
-   // only runs in debug mode 
-   // to run, in terminal, DEBUG=* node index.js OR DEBUG=myApp node index.js
-   debug(`listening on port ${chalk.green('3000')}`);
-
-
-    
-    
+/* like this:
+console.log("listening on port " + chalk.green('3000'));
+ change to template string:
+ console.log(`listening on port ${chalk.green('3000')}`);
+ but no more console logs: npm install debug instead
+ only runs in debug mode
+ to run, in terminal, DEBUG=* node index.js OR DEBUG=myApp node index.js
+ comd above changed to nodemon with it's install
+ */
+  debug(`listening at port ${chalk.green(port)}`);
 });
- 

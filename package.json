@@ -4,14 +4,35 @@
   "description": "just learning",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=myApp nodemon index.js",
+    "lint": "eslint index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
     "express": "^4.16.3",
-    "morgan": "^1.9.0"
+    "jquery": "^3.3.1",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.5",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_module/**/node_modules"
+    ],
+    "delay": "3000",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": "4000"
+    }
   }
 }
