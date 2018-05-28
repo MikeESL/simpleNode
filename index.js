@@ -7,12 +7,13 @@ const morgan = require('morgan');
 const   path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
-const bookRouter = express.Router();
- 
+
 // for  middleware: //look into other options besides combined, like tiny, etc
 app.use(morgan('tiny'));
+
 // tells express, 'hey, i'm setting up a static dir (like for css/js libs)
 app.use(express.static(path.join(__dirname, '/public')));
+
 // first, look in public, if not there, start looking down here:
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
@@ -20,37 +21,17 @@ app.set('views', './src/views');
 // app.set('view engine', 'pug');
 // change pug to ejs:
 app.set('view engine', 'ejs');
-const books = [
-                {
-                    title: "Wise Blood",
-                    author: "Flannery O'Connor"
-                },
-                {
-                    title: "The Unbearable Lightness of Being",
-                    author: "Milan Kundera"
-                },
-                {
-                    title: "Slaughterhouse Five",
-                    author: "Kurt Vonnegut"
-                },
-                {
-                    title: "The Song is You",
-                    author: "Arthur Phillips"
-                }   
-              ];
-bookRouter.route('/').get((req, resp) => {
-    resp.render('books', {
-        nav:[{"link":"/books",
-        "title":"Books"},
-       {"link":"/authors",
-       "title": "Authors"}], 
-        title:'MyNodeApp-Library',
-        books
-    });
-});
-bookRouter.route('/single').get((req, resp) => {
-    resp.send('single books bitch');
-})
+
+// on nav for entire app:
+const nav = [
+    {"link":"/books",
+     "title":"Books"},
+    {"link":"/authors",
+     "title": "Authors"}
+    ]
+
+//Router code will go here, const to define, followed by uses:
+const bookRouter = require('./src/routes/bookRoutes')(nav);
 app.use('/books', bookRouter);
 
 // request to this route exe this function:
