@@ -1,12 +1,26 @@
 // list of requires
 const express = require('express');
 const chalk = require('chalk');
-const debug = require ('debug')('myApp');
+const debug = require ('debug')('app');
 const morgan = require('morgan');
+// for sql setup, likely change to mongo later, but keep this in comments:
+const sql = require('mssql');
     // path to make sendFile paths easy, no npm needed; already here
-const   path = require('path');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
+// mssql config:
+const config = {
+    user: 'mikereser',
+    password: 'Nodelibrary123',
+    server: 'nodelibraryreser.database.windows.net', // You can use 'localhost\\instance' to connect to named instance
+    database: 'nodeLibrary',
+    options: {
+        encrypt: true
+    }
+}
+// SQL connection; returns a promise, if needed:
+sql.connect(config).catch(err => debug(err));
 
 // for  middleware: //look into other options besides combined, like tiny, etc
 app.use(morgan('tiny'));
@@ -59,5 +73,5 @@ console.log("listening on port " + chalk.green('3000'));
  to run, in terminal, DEBUG=* node index.js OR DEBUG=myApp node index.js
  comd above changed to nodemon with it's install
  */
-  debug(`listening at port ${chalk.green(port)}`);
+  debug(`listening on port ${chalk.green(port)}`);
 });
