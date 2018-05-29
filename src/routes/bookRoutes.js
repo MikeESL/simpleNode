@@ -51,7 +51,8 @@ function router(nav) {
         }())
     });
 
-    bookRouter.route('/:id').get((req, resp) => {
+    bookRouter.route('/:id')
+        .all(req, vres, next) => {
         (async function query() {
             const id = req.params.id;
             const request = new sql.Request();
@@ -59,19 +60,19 @@ function router(nav) {
             //const result = await request.query('select title, author from books where id ==' + id);
             // but now (pass in name, type and value):
             const result = await request.input('id', sql.Int, id)
-                .query('select * from books where id = @id');
-            debug(result);
-            resp.render('singleBook',
-                {
-                    nav,
-                    title: 'Just one book',
-                    book: result.recordset[0]
-                });
-
+                .query('s elect * from books where id = @id'); 
         }())
-
-    });
-    return bookRouter;
+        }
+        .get((req, resp) => {
+            // removed what was in here and place in .all() for middleware, except for the render:
+            resp.render('singleBook',
+            {
+                nav,
+                title: 'Just one book',
+                book: result.recordset[0]
+            });
+        });
+        return bookRouter;
 }
 
 module.exports = router;

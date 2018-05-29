@@ -25,6 +25,12 @@ sql.connect(config).catch(err => debug(err));
 // for  middleware: //look into other options besides combined, like tiny, etc
 app.use(morgan('tiny'));
 
+//middleware: function that is executed on everything that comes in:
+app.use((rew, resp, next) => {
+    debug('my middle ware');
+    next();
+})
+
 // tells express, 'hey, i'm setting up a static dir (like for css/js libs)
 app.use(express.static(path.join(__dirname, '/public')));
 
