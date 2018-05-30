@@ -60,7 +60,10 @@ function router(nav) {
             //const result = await request.query('select title, author from books where id ==' + id);
             // but now (pass in name, type and value):
             const result = await request.input('id', sql.Int, id)
-                .query('s elect * from books where id = @id'); 
+                .query('select * from books where id = @id');
+            // allows us to pass this in, so all we query for the ID and than can pass the req into gets, posts, etc:
+            req.book = recordset[0];
+            next();
         }())
         }
         .get((req, resp) => {
@@ -69,7 +72,10 @@ function router(nav) {
             {
                 nav,
                 title: 'Just one book',
-                book: result.recordset[0]
+                //book: result.recordset[0]
+                // so book: result.recordset[0] becomes book: req.book (middleware module):
+                book: req.book
+
             });
         });
         return bookRouter;
