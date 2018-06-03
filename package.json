@@ -2,11 +2,11 @@
   "name": "nodelib",
   "version": "1.0.0",
   "description": "just learning",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=app,app:* nodemon index.js",
-    "lint": "eslint index.js"
+    "start": "DEBUG=app,app:* nodemon app.js",
+    "lint": "eslint app.js"
   },
   "author": "",
   "license": "ISC",

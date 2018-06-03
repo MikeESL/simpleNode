@@ -14,22 +14,38 @@
 		<link href="css/styles.css" rel="stylesheet">
 	</head>
 	<body>
-
-<!-- Navbar for BS4-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-          <% for (var i=0; i<nav.length; i++){%>
-              <li class="nav-item active"><a class="nav-link" href="<%=nav[i].link%>"> <%=nav[i].title %> </a></li>
-          <%}%>
+<header class="navbar navbar-bright navbar-fixed-top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">Home</a>
+    </div>
+    <nav class="collapse navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <%for(let i=0; i<nav.length; i++) {%>
+        <li>
+          <a href="<%=nav[i].link%>"><%=nav[i].title%></a>
+        </li>
+        <%}%>
       </ul>
+      <ul class="nav navbar-right navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+          <ul class="dropdown-menu" style="padding:12px;">
+            <form class="form-inline">
+              <button type="submit" class="btn btn-default pull-right"><i class="glyphicon glyphicon-search"></i></button><input type="text" class="form-control pull-left" placeholder="Search">
+            </form>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-</nav>
-<!-- End Navbar-->
+</header>
 
 <div id="masthead">  
   <div class="container">
@@ -73,28 +89,29 @@
           
           
           
-          <!--list of books-->
-                <% for (var i=0; i<books.length; i++){%>
-                        <div class="row">    
-                            <br>
-                            <div class="col-md-2 col-sm-3 text-center">
-                                <a class="story-title" href="#"><img alt="" src="http://api.randomuser.me/portraits/thumb/men/58.jpg" style="width:100px;height:100px" class="img-circle"></a>
-                            </div>
-                            <div class="col-md-10 col-sm-9">
-                                <h3><%=books[i].title%></h3>
-                                <div class="row">
-                                    <div class="col-xs-9">
-                                      <h4><span class="label label-default"><%=books[i].author%></span></h4><h4>
-                                      <small style="font-family:courier,'new courier';" class="text-muted">lorem • <a href="/books/<%=books[i].id%>" class="text-muted">See More</a></small>
-                                      </h4></div>
-                                    <div class="col-xs-3"></div>
-                                </div>
-                                <br><br>
-                            </div>
-                        </div>
-                              <hr>
-                <%}%>
-          <!--/ end list of books-->
+          <!--/stories-->
+          <%for(let i=0; i<books.length; i++) {%>
+            <div class="row">    
+            <br>
+            <div class="col-md-2 col-sm-3 text-center">
+              <a class="story-title" href="#"><img alt="" src="http://api.randomuser.me/portraits/thumb/men/58.jpg" style="width:100px;height:100px" class="img-circle"></a>
+            </div>
+            <div class="col-md-10 col-sm-9">
+              <h3><%=books[i].title%></h3>
+              <div class="row">
+                <div class="col-xs-9">
+                  <h4><span class="label label-default"><%=books[i].author%></span></h4><h4>
+                  <small style="font-family:courier,'new courier';" class="text-muted">2 hours ago  • 
+                  <a href="/books/<%=i%>" class="text-muted">Read More</a></small>
+                  </h4></div>
+                <div class="col-xs-3"></div>
+              </div>
+              <br><br>
+            </div>
+          </div>
+          <hr>
+          <%}%>
+          <!--/stories-->
           
           
           <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>
