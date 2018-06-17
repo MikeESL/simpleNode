@@ -6,10 +6,9 @@ const authRouter  = express.Router();
 function router () {
     authRouter.route('/SignUp').post((req, res) => {
         // for this we'll need body-parser:
-
+        debug("grrr", req.body);
     });
-
-
+    return authRouter;
 }
 
-module.exports router;
+module.exports = router;
