@@ -4,7 +4,7 @@ const { Strategy } = require('passport-local');
 module.exports = function localStrategy() {
     passport.use(new Strategy(
         {
-            usernameField: 'userName',
+            usernameField: 'username',
             passwordField: 'password'
         }, (username, password, done) => {
             // this is where we'll hit the db and verifiy user
