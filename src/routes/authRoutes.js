@@ -20,18 +20,21 @@ function router () {
                 const col = db.collection('users');
                 // create user:
                 const user = {username, password};
-                // insert
+                // insert user:
+                const results = await col.insertOne(user);
+                debug("RESULTS=====", results);
+                    // create user:
+                    // login prop of request comes from passport init:
+                    req.login(results.ops[0], ()=>{
+                        res.redirect('/auth/profile');
+                    });
             } catch (err) {
-
+                debug(err);
             }
 
         }())
         debug(req.body);
-        // create user:
-        // login prop of request comes from passport init:
-        req.login(req.body, ()=>{
-            res.redirect('/auth/profile');
-        });
+
         //res.json(req.body);
     });
     authRouter.route('/profile').get((req,res) => {
