@@ -4,10 +4,20 @@ const debug = require('debug')('app:authRoutes');
 
 const authRouter  = express.Router();
 function router () {
-    authRouter.route('/SignUp').post((req, res) => {
+    authRouter.route('/signUp').post((req, res) => {
         // for this we'll need body-parser:
-        debug("grrr", req.body);
+        debug(req.body);
+        // create user:
+        // login prop of request comes from passport init:
+        req.login(req.body, ()=>{
+            res.redirect('/auth/profile');
+        });
+        //res.json(req.body);
     });
+    authRouter.route('/profile').get((req,res) => {
+        //passport attaches user to req:
+        res.json(req.user);
+    })
     return authRouter;
 }
 
