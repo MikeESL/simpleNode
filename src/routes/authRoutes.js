@@ -1,9 +1,11 @@
 const express = require('express');
 const {MongoClient} = require('mongodb');
 const debug = require('debug')('app:authRoutes');
+const passport = require ('passport');
 
 const authRouter  = express.Router();
-function router () {
+
+function router (nav) {
     authRouter.route('/signUp').post((req, res) => {
         // for this we'll need body-parser:
         const { username, password } = req.body;
@@ -22,7 +24,7 @@ function router () {
                 const user = {username, password};
                 // insert user:
                 const results = await col.insertOne(user);
-                debug("RESULTS=====", results);
+                debug("RESULTS=====>", results);
                     // create user:
                     // login prop of request comes from passport init:
                     req.login(results.ops[0], ()=>{
@@ -37,7 +39,19 @@ function router () {
 
         //res.json(req.body);
     });
+    authRouter.route('/signin').get((req, res) =>{
+        debug("do we even get here?");
+        res.render('signin', {
+            nav,
+            title: 'signIn'
+        })
+    })
+    .post(passport.authenticate('local', {
+        successRedirect: '/auth/profile',
+        failureRedirect: '/'
+    }))
     authRouter.route('/profile').get((req,res) => {
+        debug("trying to figure this out");
         //passport attaches user to req:
         res.json(req.user);
     })
